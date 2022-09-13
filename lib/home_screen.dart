@@ -13,7 +13,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    double w = (MediaQuery.of(context).size.width / 100).roundToDouble();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Homepage'),
         centerTitle: true,
@@ -21,26 +23,33 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(w * 4),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image(
-                image: NetworkImage(
-                    "https://media.istockphoto.com/vectors/qr-code-scan-phone-icon-in-comic-style-scanner-in-smartphone-vector-vector-id1166145556")),
-            flatButton("Scan QR CODE", ScanPage()),
-            SizedBox(
-              height: 20.0,
+            Expanded(
+              child: Icon(
+                Icons.qr_code_2_rounded,
+                size: w * 50,
+              ),
             ),
-            flatButton("Generate QR CODE", GeneratePage()),
+            button(
+              "Scan QR CODE",
+              ScanPage(),
+            ),
+            SizedBox(height: w * 4),
+            button(
+              "Generate QR CODE",
+              GeneratePage(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget flatButton(String text, Widget widget) {
+  Widget button(String text, Widget widget) {
     return ElevatedButton(
       onPressed: () async {
         Navigator.of(context)
