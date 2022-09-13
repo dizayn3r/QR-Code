@@ -10,60 +10,55 @@ class GeneratePage extends StatefulWidget {
 
 class GeneratePageState extends State<GeneratePage> {
   String qrData =
-      "https://github.com/neon97";  // already generated qr code when the page opens
+      "https://github.com/neon97"; // already generated qr code when the page opens
 
   @override
   Widget build(BuildContext context) {
+    double w = (MediaQuery.of(context).size.width / 100).roundToDouble();
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Generator'),
-        actions: <Widget>[],
+        centerTitle: true,
+        title: Text(
+          'QR Code Generator',
+          style: TextStyle(fontSize: w * 5, fontWeight: FontWeight.normal),
+        ),
       ),
       body: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(w * 5),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            QrImage(
-              //plce where the QR Image will be shown
-              data: qrData,
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
+            Expanded(child: QrImage(data: qrData)),
+            SizedBox(height: w * 10),
             Text(
               "New QR Link Generator",
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontSize: w * 5),
+              textAlign: TextAlign.left,
             ),
             TextField(
               controller: qrdataFeed,
               decoration: InputDecoration(
                 hintText: "Input your link or data",
+                hintStyle: TextStyle(fontSize: w * 5),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
-              child: ElevatedButton(
-
-                onPressed: () async {
-
-                  if (qrdataFeed.text.isEmpty) {
-                    setState(() {
-                      qrData = "";
-                    });
-                  } else {
-                    setState(() {
-                      qrData = qrdataFeed.text;
-                    });
-                  }
-
-                },
-                child: Text(
-                  "Generate QR",
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
+            ElevatedButton(
+              onPressed: () async {
+                if (qrdataFeed.text.isEmpty) {
+                  setState(() {
+                    qrData = "";
+                  });
+                } else {
+                  setState(() {
+                    qrData = qrdataFeed.text;
+                  });
+                }
+              },
+              child: Text(
+                "Generate QR",
+                style: TextStyle(
+                    fontSize: w * 4,
+                    fontWeight: FontWeight.normal),
               ),
             )
           ],
